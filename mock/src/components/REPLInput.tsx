@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import "../styles/main.css";
 import { ControlledInput } from "./ControlledInput";
+import { cmdHandler, isBriefMode, REPLFunction } from "./REPLFunction";
 
 interface REPLInputProps {
   // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
@@ -17,30 +18,36 @@ export function REPLInput(props: REPLInputProps) {
   // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
 
-  const [verboseMode, setVerboseMode] = useState(false);
+  const [briefMode, setBriefMode] = useState(false);
+
+  let cmdMap = new Map<string, REPLFunction>();
+  cmdMap.set("mode", isBriefMode);
+
+  // const [verboseMode, setVerboseMode] = useState(false);
 
   // This function is triggered when the button is clicked.
   function handleSubmit(commandString: string) {
     setCount(count + 1);
 
-    if (verboseMode) {
-      // CHANGED
-      props.setHistory([
-        ...props.history,
-        "Command: " + commandString + "\n" + "Output goes here",
-      ]);
-    } else {
-      props.setHistory([...props.history, "Output goes here"]);
-    }
-    handleCommand(commandString);
-    setCommandString("");
+    // if (verboseMode) {
+    //   // CHANGED
+    //   props.setHistory([...props.history, "Command: " + commandString]);
+    // }
+    // call REPLFunction directly and pass through there
+    let output: string = "Output goes here";
+    let useFunction: REPLFunction = cmdMap.get(commandString); 
+    output = cmdHandler(useFunction));
+    props.setHistory([...props.history, output]);
+    // handleCommand(commandString);
+    // setCommandString("");
   }
 
-  function handleCommand(commandString: string) {
-    if (commandString == "mode") {
-      setVerboseMode(!verboseMode);
-    }
-  }
+  // function handleCommand(commandString: string) {
+  //   if (commandString == "mode") {
+  //     setVerboseMode(!verboseMode);
+  //   }
+  //   props.setHistory([...props.history, "Output goes here"]);
+  // }
 
   /**
    * We suggest breaking down this component into smaller components, think about the individual pieces

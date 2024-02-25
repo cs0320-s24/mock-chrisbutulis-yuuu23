@@ -14,23 +14,18 @@ export interface REPLFunction {
   (args: Array<string>): String | String[][];
 }
 
-// cmd map to store command to its function
-// build relative functions
-let cmdMap = new Map<string, Function>();
-cmdMap.set("mode", isBriefMode);
-
 // check if cmd exists in map and call its relative function to return output
-export function cmdHandler(args: Array<string>) {
-  const cmd = args[0];
-  if (cmd == undefined) {
-    return "command " + cmd + " not found!";
+export function cmdHandler(useFunction: REPLFunction) {
+  return useFunction([""]);
+}
+
+export function isBriefMode(args: Array<string>) {
+  // switch the current mode to the opposite
+  setBriefMode(!briefMode);
+  if (briefMode) {
+    return "Brief Mode";
   } else {
-    const cmdFunction = cmdMap.get(cmd);
-    const cmdFunctionArgs = args.slice(1, args.length);
-    if (cmdFunction == undefined) {
-      return "command " + cmd + " does not exists";
-    } else {
-      return cmdFunction(cmdFunctionArgs);
-    }
+    return "Verbose Mode";
   }
+  return "";
 }
