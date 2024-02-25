@@ -36,9 +36,14 @@ export function REPLInput(props: REPLInputProps) {
     //   props.setHistory([...props.history, "Command: " + commandString]);
     // }
     // call REPLFunction directly and pass through there
-    let output: string = "Output goes here";
-    let useFunction: REPLFunction = cmdMap.get(commandString); 
-    output = cmdHandler(useFunction));
+    let output: string;
+    let useFunction = cmdMap.get(commandString);
+    if (useFunction == undefined) {
+      return null;
+    } else {
+      output = cmdHandler(useFunction);
+    }
+
     props.setHistory([...props.history, output]);
     // handleCommand(commandString);
     // setCommandString("");
