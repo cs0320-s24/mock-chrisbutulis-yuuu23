@@ -24,7 +24,7 @@ export default function REPL() {
       {/*This is where your REPLHistory might go... You also may choose to add it within your REPLInput 
       component or somewhere else depending on your component organization. What are the pros and cons of each? */}
       <REPLHistory history={history} />
-      <REPLOutput output={output} />
+      {/* <REPLOutput output={output} /> */}
       <hr></hr>
       {/* CHANGED */}
       <REPLInput

@@ -37,6 +37,7 @@ export function REPLInput(props: REPLInputProps) {
     if (commandString == "mode") {
       setVerboseMode(!verboseMode);
     }
+    props.setHistory([...props.history, "Output goes here"]);
   }
 
   /**
