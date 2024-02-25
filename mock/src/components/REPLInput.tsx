@@ -6,9 +6,7 @@ interface REPLInputProps {
   // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
   // CHANGED
   history: string[];
-  output: string[];
   setHistory: Dispatch<SetStateAction<string[]>>;
-  setOutput: Dispatch<SetStateAction<string[]>>;
 }
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
@@ -27,7 +25,12 @@ export function REPLInput(props: REPLInputProps) {
 
     if (verboseMode) {
       // CHANGED
-      props.setHistory([...props.history, "Command: " + commandString]);
+      props.setHistory([
+        ...props.history,
+        "Command: " + commandString + "\n" + "Output goes here",
+      ]);
+    } else {
+      props.setHistory([...props.history, "Output goes here"]);
     }
     handleCommand(commandString);
     setCommandString("");
@@ -37,7 +40,6 @@ export function REPLInput(props: REPLInputProps) {
     if (commandString == "mode") {
       setVerboseMode(!verboseMode);
     }
-    props.setHistory([...props.history, "Output goes here"]);
   }
 
   /**

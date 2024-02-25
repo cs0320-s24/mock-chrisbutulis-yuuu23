@@ -2,7 +2,6 @@ import { useState } from "react";
 import "../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
-import { REPLOutput } from "./REPLOutput";
 
 /* 
   You'll want to expand this component (and others) for the sprints! Remember 
@@ -17,22 +16,21 @@ export default function REPL() {
   // TODO: Add some kind of shared state that holds all the commands submitted.
   // CHANGED
   const [history, setHistory] = useState<string[]>([]);
-  const [output, setOutput] = useState<string[]>([]);
 
   return (
     <div className="repl">
       {/*This is where your REPLHistory might go... You also may choose to add it within your REPLInput 
       component or somewhere else depending on your component organization. What are the pros and cons of each? */}
-      <REPLHistory history={history} />
+
+      <div className="history-container">
+        <pre>
+          <REPLHistory history={history} />
+        </pre>
+      </div>
       {/* <REPLOutput output={output} /> */}
       <hr></hr>
       {/* CHANGED */}
-      <REPLInput
-        history={history}
-        output={output}
-        setHistory={setHistory}
-        setOutput={setOutput}
-      />
+      <REPLInput history={history} setHistory={setHistory} />
     </div>
   );
 }
