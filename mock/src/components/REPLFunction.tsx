@@ -1,5 +1,7 @@
 import { todo } from "node:test";
+import { off } from "process";
 import "react";
+import { isBriefMode } from "./REPLCommandFunctions";
 
 /**
  * Method to take in command, call command related functions,
@@ -12,17 +14,23 @@ export interface REPLFunction {
   (args: Array<string>): String | String[][];
 }
 
-todo;
-/**
- * When read in command line ->
- *  1. Find matching function in command map; if not found, output directly
- *  2. If found, call associating functions to that command (value of key in map?)
- *  3. Return result to be put in history
- *
- * Build associating command line to components map in here directly or in REPL?
- * How to incorporate strategy pattern here?
- * What is command-name prefix?
- * Should map be from string (command) to components? (something like <command />),
- *  if so how should we take care of that type?
- * When using this component, take in commandline and function parameter as props to this component?
- */
+// cmd map to store command to its function
+// build relative functions
+let cmdMap = new Map<string, Function>();
+cmdMap.set("mode", isBriefMode);
+
+// check if cmd exists in map and call its relative function to return output
+export function cmdHandler(args: Array<string>) {
+  const cmd = args[0];
+  if (cmd == undefined) {
+    return "command " + cmd + " not found!";
+  } else {
+    const cmdFunction = cmdMap.get(cmd);
+    const cmdFunctionArgs = args.slice(1, args.length);
+    if (cmdFunction == undefined) {
+      return "command " + cmd + " does not exists";
+    } else {
+      return cmdFunction(cmdFunctionArgs);
+    }
+  }
+}
