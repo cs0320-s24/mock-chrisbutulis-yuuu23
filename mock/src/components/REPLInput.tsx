@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import "../styles/main.css";
 import { ControlledInput } from "./ControlledInput";
-import { cmdHandler, isBriefMode, REPLFunction } from "./REPLFunction";
+import { loadFile, cmdHandler, REPLFunction } from "./REPLFunction";
 
 interface REPLInputProps {
   // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
@@ -21,7 +21,7 @@ export function REPLInput(props: REPLInputProps) {
   const [briefMode, setBriefMode] = useState(false);
 
   let cmdMap = new Map<string, REPLFunction>();
-  cmdMap.set("mode", isBriefMode);
+  cmdMap.set("load_file", loadFile);
 
   // const [verboseMode, setVerboseMode] = useState(false);
 
@@ -29,30 +29,33 @@ export function REPLInput(props: REPLInputProps) {
   function handleSubmit(commandString: string) {
     setCount(count + 1);
 
-    // if (verboseMode) {
-    //   // CHANGED
-    //   props.setHistory([...props.history, "Command: " + commandString]);
-    // }
-    // call REPLFunction directly and pass through there
     let output: string;
-    let useFunction = cmdMap.get(commandString);
-    if (useFunction == undefined) {
-      return null;
+
+    if (commandString == "mode") {
+      setBriefMode(!briefMode);
+      output = "mode updated";
     } else {
-      output = cmdHandler(useFunction);
+      let args = commandString.split(" ");
+      let useFunction = cmdMap.get(args[0]);
+      if (useFunction == undefined) {
+        output = "ERROR";
+      } else {
+        output = cmdHandler(useFunction, args.slice(1));
+      }
     }
 
-    props.setHistory([...props.history, output]);
-    // handleCommand(commandString);
-    // setCommandString("");
-  }
+    if (briefMode) {
+      // CHANGED
 
-  // function handleCommand(commandString: string) {
-  //   if (commandString == "mode") {
-  //     setVerboseMode(!verboseMode);
-  //   }
-  //   props.setHistory([...props.history, "Output goes here"]);
-  // }
+      props.setHistory([
+        ...props.history,
+        "Command: " + commandString + "\n" + output,
+      ]);
+    } else {
+      props.setHistory([...props.history, output]);
+    }
+    setCommandString("");
+  }
 
   /**
    * We suggest breaking down this component into smaller components, think about the individual pieces

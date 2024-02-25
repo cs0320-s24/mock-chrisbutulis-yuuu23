@@ -1,7 +1,6 @@
 import { todo } from "node:test";
 import { off } from "process";
 import "react";
-import { isBriefMode } from "./REPLCommandFunctions";
 
 /**
  * Method to take in command, call command related functions,
@@ -14,18 +13,15 @@ export interface REPLFunction {
   (args: Array<string>): string;
 }
 
+// arg0 -> cmd
+// arg1 -> briefMode
+
 // check if cmd exists in map and call its relative function to return output
-export function cmdHandler(useFunction: REPLFunction) {
-  return useFunction([""]);
+export function cmdHandler(useFunction: REPLFunction, args: string[]) {
+  return useFunction(args);
 }
 
-export function isBriefMode(args: Array<string>) {
-  // switch the current mode to the opposite
-  setBriefMode(!briefMode);
-  if (briefMode) {
-    return "Brief Mode";
-  } else {
-    return "Verbose Mode";
-  }
-  return "";
+export function loadFile(args: Array<string>) {
+  if (args[0] == "f") return "success";
+  return "failure";
 }
