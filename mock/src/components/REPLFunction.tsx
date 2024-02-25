@@ -11,7 +11,7 @@ import { isBriefMode } from "./REPLCommandFunctions";
  * output: the result to print to history when the command finishes execution
  */
 export interface REPLFunction {
-  (args: Array<string>): String | String[][];
+  (args: Array<string>): string;
 }
 
 // check if cmd exists in map and call its relative function to return output
