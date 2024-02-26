@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import "../styles/main.css";
 import { ControlledInput } from "./ControlledInput";
-import { loadFile, REPLFunction } from "./REPLFunction";
 import { getCommandMap } from "./REPLCmdMap";
+import { loadFile, REPLFunction, viewFile } from "./REPLFunction";
 
 interface REPLInputProps {
   // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
@@ -29,7 +29,7 @@ export function REPLInput(props: REPLInputProps) {
   function handleSubmit(commandString: string) {
     setCount(count + 1);
 
-    let output: string;
+    let output;
 
     if (commandString == "mode") {
       setBriefMode(!briefMode);
@@ -52,7 +52,7 @@ export function REPLInput(props: REPLInputProps) {
         "Command: " + commandString + "\n" + output,
       ]);
     } else {
-      props.setHistory([...props.history, output]);
+      props.setHistory([...props.history, "\n" + output]); // Wack thing going on with \n here
     }
     setCommandString("");
   }
