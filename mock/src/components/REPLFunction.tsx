@@ -2,7 +2,6 @@ import { todo } from "node:test";
 import { off } from "process";
 import "react";
 import { Dispatch, SetStateAction, useState } from "react";
-import { useState } from "react";
 
 /**
  * Method to take in command, call command related functions,
@@ -22,14 +21,12 @@ let starsArray = [
 mockedFileMap.set("stars", starsArray);
 
 export interface REPLFunction {
-
   (
     args: Array<string>,
     mode: boolean,
     setBriefMode: Dispatch<SetStateAction<boolean>>
-  ): string;
+  ): string | string[][];
 }
-
 
 export function loadFile(args: Array<string>) {
   if (args.length > 1) return "Too many arguments provided";

@@ -3,6 +3,7 @@ import "../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
 import { REPLFunction } from "./REPLFunction";
+import { getCommandMap } from "./REPLCmdMap";
 
 /* 
   You'll want to expand this component (and others) for the sprints! Remember 
@@ -31,7 +32,11 @@ export default function REPL() {
       {/* <REPLOutput output={output} /> */}
       <hr></hr>
       {/* CHANGED */}
-      <REPLInput history={history} setHistory={setHistory} />
+      <REPLInput
+        history={history}
+        setHistory={setHistory}
+        commandMap={getCommandMap()}
+      />
     </div>
   );
 }
