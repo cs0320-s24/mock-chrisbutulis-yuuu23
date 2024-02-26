@@ -20,7 +20,7 @@ export function REPLInput(props: REPLInputProps) {
   const [commandString, setCommandString] = useState<string>("");
   // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
-  const [briefMode, setBriefMode] = useState(false);
+  const [briefMode, setBriefMode] = useState(true);
 
   // const [verboseMode, setVerboseMode] = useState(false);
 
@@ -33,20 +33,12 @@ export function REPLInput(props: REPLInputProps) {
     let args = commandString.split(" ");
     let useFunction = props.commandMap.get(args[0]);
     if (useFunction == undefined) {
-      output = "ERROR";
+      output = "Command " + args[0] + " not found";
     } else {
-      output = useFunction(args.slice(1), briefMode, setBriefMode);
+      output = useFunction(args, briefMode, setBriefMode);
     }
 
-    if (briefMode) {
-      // CHANGED
-      props.setHistory([
-        ...props.history,
-        "Command: " + commandString + "\n" + output,
-      ]);
-    } else {
-      props.setHistory([...props.history, "\n" + output]); // Wack thing going on with \n here
-    }
+    props.setHistory([...props.history, "\n" + output]); // Wack thing going on with \n here
     setCommandString("");
   }
 
