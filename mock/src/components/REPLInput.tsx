@@ -30,22 +30,16 @@ export function REPLInput(props: REPLInputProps) {
 
     let output;
 
-    if (commandString == "mode") {
-      setBriefMode(!briefMode);
-      output = "mode updated";
+    let args = commandString.split(" ");
+    let useFunction = props.commandMap.get(args[0]);
+    if (useFunction == undefined) {
+      output = "ERROR";
     } else {
-      let args = commandString.split(" ");
-      let useFunction = props.commandMap.get(args[0]);
-      if (useFunction == undefined) {
-        output = "ERROR";
-      } else {
-        output = useFunction(args.slice(1), briefMode, setBriefMode);
-      }
+      output = useFunction(args.slice(1), briefMode, setBriefMode);
     }
 
     if (briefMode) {
       // CHANGED
-
       props.setHistory([
         ...props.history,
         "Command: " + commandString + "\n" + output,

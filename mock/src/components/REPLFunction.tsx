@@ -28,6 +28,15 @@ export interface REPLFunction {
   ): string | string[][];
 }
 
+export function changeMode(
+  args: Array<string>,
+  mode: boolean,
+  setBriefMode: Dispatch<SetStateAction<boolean>>
+) {
+  setBriefMode(!mode);
+  return "mode changed";
+}
+
 export function loadFile(args: Array<string>) {
   if (args.length > 1) return "Too many arguments provided";
 
