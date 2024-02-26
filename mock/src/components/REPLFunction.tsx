@@ -14,6 +14,12 @@ import { useState } from "react";
 let loadedFile: string | null = null;
 let mockedFileMap = new Map<string, string[][]>();
 
+let starsArray = [
+  ["name", "location", "x-coord"],
+  ["sun", "milky way", "192"],
+];
+mockedFileMap.set("stars", starsArray);
+
 export interface REPLFunction {
   (args: Array<string>): string | string[][];
 }
@@ -27,4 +33,12 @@ export function loadFile(args: Array<string>) {
     return "File loaded";
   }
   return "File couldn't be found";
+}
+
+export function viewFile() {
+  if (loadedFile) {
+    let resultArray = mockedFileMap.get(loadedFile);
+    if (resultArray) return resultArray;
+  }
+  return "No file is loaded";
 }

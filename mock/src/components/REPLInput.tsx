@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import "../styles/main.css";
 import { ControlledInput } from "./ControlledInput";
-import { loadFile, REPLFunction } from "./REPLFunction";
+import { loadFile, REPLFunction, viewFile } from "./REPLFunction";
 
 interface REPLInputProps {
   // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
@@ -22,6 +22,7 @@ export function REPLInput(props: REPLInputProps) {
 
   let cmdMap = new Map<string, REPLFunction>();
   cmdMap.set("load_file", loadFile);
+  cmdMap.set("view", viewFile);
 
   // const [verboseMode, setVerboseMode] = useState(false);
 
