@@ -1,6 +1,7 @@
 import { todo } from "node:test";
 import { off } from "process";
 import "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 /**
  * Method to take in command, call command related functions,
@@ -10,18 +11,18 @@ import "react";
  * output: the result to print to history when the command finishes execution
  */
 export interface REPLFunction {
-  (args: Array<string>): string;
+  (
+    args: Array<string>,
+    mode: boolean,
+    setBriefMode: Dispatch<SetStateAction<boolean>>
+  ): string;
 }
 
-// arg0 -> cmd
-// arg1 -> briefMode
-
-// check if cmd exists in map and call its relative function to return output
-export function cmdHandler(useFunction: REPLFunction, args: string[]) {
-  return useFunction(args);
-}
-
-export function loadFile(args: Array<string>) {
+export function loadFile(
+  args: Array<string>,
+  mode: boolean,
+  setBriefMode: Dispatch<SetStateAction<boolean>>
+) {
   if (args[0] == "f") return "success";
   return "failure";
 }
