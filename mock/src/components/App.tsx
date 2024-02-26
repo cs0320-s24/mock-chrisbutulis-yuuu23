@@ -1,13 +1,16 @@
-import { useState } from 'react';
-import '../styles/App.css';
-import { LoginButton } from './LoginButton';
-import REPL from './REPL';
+import { useState } from "react";
+import "../styles/App.css";
+import { LoginButton } from "./LoginButton";
+import REPL from "./REPL";
+import { addCommand, getCommandMap } from "./REPLCmdMap";
+import { loadFile } from "./REPLFunction";
 
 /**
  * This is the highest level component!
  */
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  addCommand("load", loadFile);
 
   return (
     <div className="App">
@@ -16,7 +19,7 @@ function App() {
         <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       </p>
 
-      { isLoggedIn && <REPL /> }
+      {isLoggedIn && <REPL />}
     </div>
   );
 }

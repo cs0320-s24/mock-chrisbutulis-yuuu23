@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import "../styles/main.css";
 import { ControlledInput } from "./ControlledInput";
+import { getCommandMap } from "./REPLCmdMap";
 import { loadFile, REPLFunction, viewFile } from "./REPLFunction";
 
 interface REPLInputProps {
@@ -8,21 +9,19 @@ interface REPLInputProps {
   // CHANGED
   history: string[];
   setHistory: Dispatch<SetStateAction<string[]>>;
+  commandMap: Map<string, REPLFunction>;
 }
+
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
 export function REPLInput(props: REPLInputProps) {
   // Remember: let React manage state in your webapp.
   // Manages the contents of the input box
+  props.commandMap = getCommandMap();
   const [commandString, setCommandString] = useState<string>("");
   // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
-
   const [briefMode, setBriefMode] = useState(false);
-
-  let cmdMap = new Map<string, REPLFunction>();
-  cmdMap.set("load_file", loadFile);
-  cmdMap.set("view", viewFile);
 
   // const [verboseMode, setVerboseMode] = useState(false);
 
@@ -37,11 +36,11 @@ export function REPLInput(props: REPLInputProps) {
       output = "mode updated";
     } else {
       let args = commandString.split(" ");
-      let useFunction = cmdMap.get(args[0]);
+      let useFunction = props.commandMap.get(args[0]);
       if (useFunction == undefined) {
         output = "ERROR";
       } else {
-        output = useFunction(args.slice(1));
+        output = useFunction(args.slice(1), briefMode, setBriefMode);
       }
     }
 

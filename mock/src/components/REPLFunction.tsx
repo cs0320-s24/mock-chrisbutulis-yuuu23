@@ -1,6 +1,7 @@
 import { todo } from "node:test";
 import { off } from "process";
 import "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useState } from "react";
 
 /**
@@ -21,8 +22,14 @@ let starsArray = [
 mockedFileMap.set("stars", starsArray);
 
 export interface REPLFunction {
-  (args: Array<string>): string | string[][];
+
+  (
+    args: Array<string>,
+    mode: boolean,
+    setBriefMode: Dispatch<SetStateAction<boolean>>
+  ): string;
 }
+
 
 export function loadFile(args: Array<string>) {
   if (args.length > 1) return "Too many arguments provided";
