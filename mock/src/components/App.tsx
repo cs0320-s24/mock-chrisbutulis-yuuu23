@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../styles/App.css";
 import { LoginButton } from "./LoginButton";
-import REPL from "./REPL";
+import { REPL } from "./REPL";
 import { addCommand, getCommandMap } from "./REPLCmdMap";
 import { changeMode, loadFile, viewFile } from "./REPLFunction";
 
@@ -16,11 +16,10 @@ function App() {
 
   return (
     <div className="App">
-      <p className="App-header">
+      <div className="App-header">
         <h1>Mock</h1>
         <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      </p>
-
+      </div>
       {isLoggedIn && <REPL />}
     </div>
   );

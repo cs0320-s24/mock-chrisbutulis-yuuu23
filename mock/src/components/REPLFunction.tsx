@@ -9,8 +9,8 @@ import { Dispatch, SetStateAction } from "react";
  * output: the result to print to history when the command finishes execution
  */
 
-let loadedFile: String | null = null;
-let mockedFileMap = new Map<String, String[][]>();
+let loadedFile: string | null = null;
+let mockedFileMap = new Map<string, string[][]>();
 
 let starsArray = [
   ["name", "location", "x-coord"],
@@ -23,59 +23,77 @@ export interface REPLFunction {
     args: Array<string>,
     briefMode: boolean,
     setBriefMode: Dispatch<SetStateAction<boolean>>
-  ): String | String[][];
+  ): string | string[][];
 }
 
-export function changeMode(
-  args: Array<String>,
+export const changeMode: REPLFunction = (
+  args: Array<string>,
   briefMode: boolean,
   setBriefMode: Dispatch<SetStateAction<boolean>>
-): String {
-  setBriefMode(!briefMode);
-  // I'm not sure why it has a lag as to changing the state,
-  // so I had to make it the opposite so that when it changes mode it
-  // doesn't return based on the previous mode
-  return briefMode
-    ? "mode changed to verbose "
-    : "Command: " + args[0] + "\n" + "mode changed to brief";
-}
+): string => {
+  let result: string;
+  if (args.length > 1 || args.length <= 0) {
+    result =
+      "Incorrect amount of arguments provided to mode: " +
+      args.length +
+      " arguments; please use mode (1 argument)";
+  } else {
+    setBriefMode(!briefMode);
+    // I'm not sure why it has a lag as to changing the state,
+    // so I had to make it the opposite so that when it changes mode it
+    // doesn't return based on the previous mode
+    result = briefMode ? "mode changed to verbose " : "mode changed to brief";
+  }
+  return result;
+};
 
-export function loadFile(
-  args: Array<String>,
+export const loadFile: REPLFunction = (
+  args: Array<string>,
   briefMode: boolean,
   setBriefMode: Dispatch<SetStateAction<boolean>>
-): String {
-  let result: String;
+): string => {
+  let result: string;
   let fileArgumets = args.slice(1);
-  if (fileArgumets.length > 1) {
-    result = "Too many arguments provided";
+  if (fileArgumets.length > 1 || fileArgumets.length <= 0) {
+    result =
+      "Incorrect amount of arguments provided to load_file: " +
+      fileArgumets.length +
+      " arguments; please provide load_file <file name>";
   } else {
     let fileKey = mockedFileMap.get(fileArgumets[0]);
     if (fileKey) {
       loadedFile = fileArgumets[0];
-      result = "File " + loadedFile + " loaded";
+      result = "File with file name " + loadedFile + " loaded";
     } else {
-      result = "File " + loadedFile + " cannot be found";
+      result = "File with file name " + args[1] + " cannot be found";
     }
   }
-  return briefMode ? result : "Command: " + args[0] + args[1] + "\n" + result;
-}
+  return result;
+};
 
-export function viewFile(
-  args: Array<String>,
+export const viewFile: REPLFunction = (
+  args: Array<string>,
   briefMode: boolean,
   setBriefMode: Dispatch<SetStateAction<boolean>>
-) {
-  let result: String[][] | String;
-  if (loadedFile) {
-    let resultArray = mockedFileMap.get(loadedFile);
-    if (resultArray == undefined) {
-      result = "File " + loadFile + " not found in file map";
-    } else {
-      result = resultArray;
-    }
+): string | string[][] => {
+  let result: string[][] | string;
+  if (args.length > 1 || args.length <= 0) {
+    result =
+      "Incorrect amount of arguments provided to view: " +
+      args.length +
+      " arguments; please use view (1 argument)";
   } else {
-    result = "No file is loaded; please use load_file command";
+    if (loadedFile) {
+      let resultArray = mockedFileMap.get(loadedFile);
+      if (resultArray == undefined) {
+        result = "File with file name " + loadFile + " not found in file map";
+      } else {
+        result = resultArray;
+      }
+    } else {
+      result =
+        "No file is loaded; please use load_file <file_name> command first";
+    }
   }
-  return briefMode ? result : "Command: " + args[0] + "\n" + result;
-}
+  return result;
+};
