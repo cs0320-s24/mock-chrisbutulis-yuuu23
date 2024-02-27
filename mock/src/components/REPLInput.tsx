@@ -3,12 +3,13 @@ import "../styles/main.css";
 import { ControlledInput } from "./ControlledInput";
 import { getCommandMap } from "./REPLCmdMap";
 import { loadFile, REPLFunction, viewFile } from "./REPLFunction";
+import { histEntry } from "./REPL";
 
 interface REPLInputProps {
   // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
   // CHANGED
-  history: string[];
-  setHistory: Dispatch<SetStateAction<string[]>>;
+  history: Array<histEntry>;
+  setHistory: Dispatch<SetStateAction<Array<histEntry>>>;
   commandMap: Map<string, REPLFunction>;
 }
 
@@ -20,39 +21,29 @@ export function REPLInput(props: REPLInputProps) {
   const [commandString, setCommandString] = useState<string>("");
   // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
-  const [briefMode, setBriefMode] = useState(false);
+  const [briefMode, setBriefMode] = useState<boolean>(true);
 
   // const [verboseMode, setVerboseMode] = useState(false);
 
   // This function is triggered when the button is clicked.
   function handleSubmit(commandString: string) {
     setCount(count + 1);
-
-    let output;
-
-    if (commandString == "mode") {
-      setBriefMode(!briefMode);
-      output = "mode updated";
+    let output: string | string[][];
+    let args = commandString.split(" ");
+    let useFunction = props.commandMap.get(args[0]);
+    if (useFunction == undefined) {
+      output = "Command " + args[0] + " not found";
     } else {
-      let args = commandString.split(" ");
-      let useFunction = props.commandMap.get(args[0]);
-      if (useFunction == undefined) {
-        output = "ERROR";
-      } else {
-        output = useFunction(args.slice(1), briefMode, setBriefMode);
-      }
+      output = useFunction(args, briefMode, setBriefMode);
     }
 
-    if (briefMode) {
-      // CHANGED
+    let newEntry: histEntry = {
+      isBrief: briefMode,
+      data: output,
+      cmd: commandString,
+    };
 
-      props.setHistory([
-        ...props.history,
-        "Command: " + commandString + "\n" + output,
-      ]);
-    } else {
-      props.setHistory([...props.history, "\n" + output]); // Wack thing going on with \n here
-    }
+    props.setHistory([...props.history, newEntry]); // Wack thing going on with \n here
     setCommandString("");
   }
 
