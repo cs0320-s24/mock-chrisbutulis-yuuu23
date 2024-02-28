@@ -18,11 +18,15 @@ let starsArray = [
   ["name", "location", "x-coord"],
   ["sun", "milky way", "192"],
   ["96 G. Psc", "milky way", "1032.2"],
+  ["sun", "another milky way", "192.3"],
   ["Rigel Kentaurus A", "Andromeda", "3.20"],
 ];
 mockedFileMap.set("stars", starsArray);
 searchResultsLabels.set("name", new Map());
-searchResultsLabels.get("name")!.set("sun", [["sun", "milky way", "192"]]);
+searchResultsLabels.get("name")!.set("sun", [
+  ["sun", "milky way", "192"],
+  ["sun", "another milky way", "192.3"],
+]);
 
 /**
  * A interface for all REPLFunctions;
@@ -180,7 +184,16 @@ export const searchFile: REPLFunction = (
       if (resultArray != undefined) {
         result = resultArray;
       } else {
+
+        result =
+          "No search results for " +
+          "coloumn identifier: " +
+          args[1] +
+          " value: " +
+          args[2];
+
         result = "No search results";
+
       }
     } else {
       result =

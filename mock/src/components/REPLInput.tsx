@@ -70,9 +70,24 @@ export function REPLInput(props: REPLInputProps) {
     setCommandString("");
   }
 
+  const onKeydown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
+    // 'keypress' event misbehaves on mobile so we track 'Enter' key via 'keydown' event
+    if (event.key === "Enter") {
+      event.preventDefault();
+      event.stopPropagation();
+      handleSubmit(commandString);
+    }
+  };
+
   return (
     <div className="repl-input">
-      <fieldset>
+      <fieldset
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSubmit(commandString);
+          }
+        }}
+      >
         <legend>Enter a command:</legend>
         <ControlledInput
           value={commandString}
@@ -80,7 +95,7 @@ export function REPLInput(props: REPLInputProps) {
           ariaLabel={"Command input"}
         />
       </fieldset>
-      <button onClick={() => handleSubmit(commandString)}>
+      <button type="submit" onClick={() => handleSubmit(commandString)}>
         Submitted {count} times
       </button>
     </div>
