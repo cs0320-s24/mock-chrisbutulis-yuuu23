@@ -2,8 +2,8 @@ import { useState } from "react";
 import "../styles/App.css";
 import { LoginButton } from "./LoginButton";
 import { REPL } from "./REPL";
-import { addCommand, getCommandMap } from "./REPLCmdMap";
-import { changeMode, loadFile, viewFile } from "./REPLFunction";
+import { addCommand } from "./REPLCmdMap";
+import { changeMode, loadFile, viewFile, searchFile } from "./REPLFunction";
 
 /**
  * This is the highest level component!
@@ -13,6 +13,7 @@ function App() {
   addCommand("mode", changeMode);
   addCommand("load_file", loadFile);
   addCommand("view", viewFile);
+  addCommand("search", viewFile);
 
   return (
     <div className="App">

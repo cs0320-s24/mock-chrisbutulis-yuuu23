@@ -10,13 +10,21 @@ import { Dispatch, SetStateAction } from "react";
  */
 
 let loadedFile: string | null = null;
+interface searchInfo {
+  column: string;
+  value: string;
+}
 let mockedFileMap = new Map<string, string[][]>();
+let searchResults = new Map<searchInfo, string[][]>();
 
 let starsArray = [
   ["name", "location", "x-coord"],
   ["sun", "milky way", "192"],
+  ["96 G. Psc", "milky way", "1032.2"],
+  ["Rigel Kentaurus A", "Andromeda", "3.20"],
 ];
 mockedFileMap.set("stars", starsArray);
+searchResults.set({ column: "name", value: "sun" }, [["sun", "milky way", "192"]]);
 
 export interface REPLFunction {
   (
@@ -89,6 +97,32 @@ export const viewFile: REPLFunction = (
         result = "File with file name " + loadFile + " not found in file map";
       } else {
         result = resultArray;
+      }
+    } else {
+      result =
+        "No file is loaded; please use load_file <file_name> command first";
+    }
+  }
+  return result;
+};
+
+export const searchFile: REPLFunction = (
+  args: Array<string>,
+  briefMode: boolean,
+  setBriefMode: Dispatch<SetStateAction<boolean>>
+): string | string[][] => {
+  let result: string[][] | string;
+  if (args.length > 3 || args.length <= 0) {
+    result =
+      "Incorrect amount of arguments provided to search: " +
+      args.length +
+      " arguments; please use search <column number or name><item to search for>  (1 argument)";
+  } else {
+    if (loadedFile) {
+      let resultArray =  
+      if (resultArray == undefined) {
+        
+      } else {
       }
     } else {
       result =
