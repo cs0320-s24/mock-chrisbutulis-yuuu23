@@ -180,7 +180,7 @@ export const searchFile: REPLFunction = (
       if (resultArray != undefined) {
         result = resultArray;
       } else {
-        result = "No search results" + args[1] + args[2];
+        result = "No search results";
       }
     } else {
       result =
