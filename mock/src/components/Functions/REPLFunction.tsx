@@ -24,6 +24,17 @@ mockedFileMap.set("stars", starsArray);
 searchResultsLabels.set("name", new Map());
 searchResultsLabels.get("name")!.set("sun", [["sun", "milky way", "192"]]);
 
+/**
+ * A interface for all REPLFunctions;
+ *  developers should build their function according to this interface
+ *
+ * @params
+ * args: the command string parsed into an argument array
+ * briefMode: whether the current mode is brief mode or not
+ *  (the developer may choose to customize their output accordingly)
+ * setBriefMode: function to change the mode state
+ *  (the developer may wish to change the mode as part of their customized command)
+ */
 export interface REPLFunction {
   (
     args: Array<string>,
@@ -32,6 +43,16 @@ export interface REPLFunction {
   ): string | string[][];
 }
 
+/**
+ * Default function to change the mode of Mock to brief if in verbose
+ *  and verbose if in brief.
+ * For the "mode" command.
+ *
+ * @param args the command for valid number of command checking
+ * @param briefMode current mode
+ * @param setBriefMode function to update the mode state
+ * @returns string of success or error depending on if the mode switched / what mode it switched to
+ */
 export const changeMode: REPLFunction = (
   args: Array<string>,
   briefMode: boolean,
@@ -45,14 +66,20 @@ export const changeMode: REPLFunction = (
       " arguments; please use mode (1 argument)";
   } else {
     setBriefMode(!briefMode);
-    // I'm not sure why it has a lag as to changing the state,
-    // so I had to make it the opposite so that when it changes mode it
-    // doesn't return based on the previous mode
     result = briefMode ? "mode changed to verbose " : "mode changed to brief";
   }
   return result;
 };
 
+/**
+ * A function to load files in and update global variable for loaded in file.
+ * For the "load_file" command
+ *
+ * @param args for argument checking and file to load in
+ * @param briefMode (unused - for interface )
+ * @param setBriefMode (unused - for interface)
+ * @returns depending on success or failure if the file is loaded in successifully
+ */
 export const loadFile: REPLFunction = (
   args: Array<string>,
   briefMode: boolean,
@@ -77,6 +104,16 @@ export const loadFile: REPLFunction = (
   return result;
 };
 
+/**
+ * Function to view the current loaded in file if any was loaded.
+ * For the command "view"
+ *
+ * @param args for number of argument checking
+ * @param briefMode (unused - for interface )
+ * @param setBriefMode (unused - for interface )
+ * @returns if failure return string for failure message;
+ *  if success return the string 2D array holding CSV data in rows
+ */
 export const viewFile: REPLFunction = (
   args: Array<string>,
   briefMode: boolean,
@@ -104,6 +141,17 @@ export const viewFile: REPLFunction = (
   return result;
 };
 
+/**
+ * Function to search the current loaded-in file given column identifier
+ *  (as column name or column index) and a value to search for.
+ * For the command "search"
+ *
+ * @param args for number of argument checking and query parameters
+ * @param briefMode (unused - for interface )
+ * @param setBriefMode (unused - for interface )
+ * @returns if failure return string for failure message;
+ *  if success return the string 2D array holding the found rows
+ */
 export const searchFile: REPLFunction = (
   args: Array<string>,
   briefMode: boolean,
