@@ -3,7 +3,12 @@ import "../styles/App.css";
 import { LoginButton } from "./LoginButton";
 import { REPL } from "./REPL";
 import { addCommand } from "./Functions/REPLCmdMap";
-import { changeMode, loadFile, viewFile } from "./Functions/REPLFunction";
+import {
+  changeMode,
+  loadFile,
+  viewFile,
+  searchFile,
+} from "./Functions/REPLFunction";
 
 /**
  * This is the highest level of Mock which builds the component APP;
@@ -25,7 +30,7 @@ function App() {
   addCommand("mode", changeMode);
   addCommand("load_file", loadFile);
   addCommand("view", viewFile);
-  addCommand("search", viewFile);
+  addCommand("search", searchFile);
 
   return (
     <div className="App">
