@@ -10,12 +10,9 @@ import { Dispatch, SetStateAction } from "react";
  */
 
 let loadedFile: string | null = null;
-interface searchInfo {
-  column: string;
-  value: string;
-}
+
 let mockedFileMap = new Map<string, string[][]>();
-let searchResults = new Map<searchInfo, string[][]>();
+let searchResultsLabels: Map<string, Map<string, string[][]>> = new Map();
 
 let starsArray = [
   ["name", "location", "x-coord"],
@@ -24,7 +21,8 @@ let starsArray = [
   ["Rigel Kentaurus A", "Andromeda", "3.20"],
 ];
 mockedFileMap.set("stars", starsArray);
-searchResults.set({ column: "name", value: "sun" }, [["sun", "milky way", "192"]]);
+searchResultsLabels.set("name", new Map());
+searchResultsLabels.get("name")!.set("sun", [["sun", "milky way", "192"]]);
 
 export interface REPLFunction {
   (
@@ -112,17 +110,29 @@ export const searchFile: REPLFunction = (
   setBriefMode: Dispatch<SetStateAction<boolean>>
 ): string | string[][] => {
   let result: string[][] | string;
-  if (args.length > 3 || args.length <= 0) {
+  if (args.length != 3) {
+    console.log(args.length);
     result =
       "Incorrect amount of arguments provided to search: " +
       args.length +
       " arguments; please use search <column number or name><item to search for>  (1 argument)";
   } else {
     if (loadedFile) {
-      let resultArray =  
-      if (resultArray == undefined) {
-        
+      let resultArray: string[][] | undefined;
+      let outerMap: Map<string, string[][]> | undefined;
+      if (!isNaN(parseInt(args[1]))) {
+        let column = mockedFileMap.get(loadedFile)![0][parseInt(args[1])];
+        outerMap = searchResultsLabels.get(column);
       } else {
+        outerMap = searchResultsLabels.get(args[1]);
+      }
+      if (outerMap) {
+        resultArray = outerMap.get(args[2]);
+      }
+      if (resultArray != undefined) {
+        result = resultArray;
+      } else {
+        result = "No search results" + args[1] + args[2];
       }
     } else {
       result =

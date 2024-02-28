@@ -13,7 +13,7 @@ function App() {
   addCommand("mode", changeMode);
   addCommand("load_file", loadFile);
   addCommand("view", viewFile);
-  addCommand("search", viewFile);
+  addCommand("search", searchFile);
 
   return (
     <div className="App">
