@@ -1,9 +1,4 @@
-/*
-  This is a reasonable starting point for the CSS in Mock.
-  Positioning in CSS can sometimes be annoying to manage, so we've opted to 
-  give you this starter CSS. Feel free to modify it as you wish, though.
-*/
-
+/* CSS for Main REPL interface */
 .repl {
   position: relative;
   min-height: 95vh;
@@ -25,11 +20,13 @@
   margin: auto;
   display: block;
 }
+
 button {
   margin: auto;
   display: block;
 }
 
+/* For data tables whenever table display is required*/
 .csv-data-table {
   margin-left: auto;
   margin-right: auto;
