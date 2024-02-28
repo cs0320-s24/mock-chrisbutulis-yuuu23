@@ -184,12 +184,16 @@ export const searchFile: REPLFunction = (
       if (resultArray != undefined) {
         result = resultArray;
       } else {
+
         result =
           "No search results for " +
           "coloumn identifier: " +
           args[1] +
           " value: " +
           args[2];
+
+        result = "No search results";
+
       }
     } else {
       result =
