@@ -35,7 +35,7 @@ export function REPL() {
 
   return (
     <div className="repl">
-      <div className="history-container">
+      <div className="history-container" aria-lable="History container">
         <pre>
           <REPLHistory history={history} />
         </pre>

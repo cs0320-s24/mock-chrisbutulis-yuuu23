@@ -45,14 +45,14 @@ export function REPLHistory(props: REPLHistoryProps) {
   }
 
   return (
-    <div className="repl-history" aria-label="repl-history">
+    <div className="repl-history" aria-label="Repl history">
       {props.history.map((entry, index) => (
         <div key={index}>
           {!entry.isBrief && <p>{"command: " + entry.cmd}</p>}
           {typeof entry.data === "string" ? (
             <p>{entry.data}</p>
           ) : (
-            <table className="csv-data-table">
+            <table className="csv-data-table" aria-label="CSV Tables">
               {configureTableData(entry.data)}
             </table>
           )}

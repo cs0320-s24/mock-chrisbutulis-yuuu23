@@ -82,6 +82,7 @@ export function REPLInput(props: REPLInputProps) {
   return (
     <div className="repl-input">
       <fieldset
+        aria-label="Input Box"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             handleSubmit(commandString);
@@ -92,10 +93,14 @@ export function REPLInput(props: REPLInputProps) {
         <ControlledInput
           value={commandString}
           setValue={setCommandString}
-          ariaLabel={"Command input"}
+          ariaLabel="Command input"
         />
       </fieldset>
-      <button type="submit" onClick={() => handleSubmit(commandString)}>
+      <button
+        type="submit"
+        aria-lable="Submit cmd btn"
+        onClick={() => handleSubmit(commandString)}
+      >
         Submitted {count} times
       </button>
     </div>
