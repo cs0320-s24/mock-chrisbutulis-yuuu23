@@ -141,7 +141,7 @@ export const searchFile: REPLFunction = (
   setBriefMode: Dispatch<SetStateAction<boolean>>
 ): string | string[][] => {
   let result: string[][] | string;
-  if (args.length < 2) {
+  if (args.length <= 2) {
     console.log(args.length);
     result =
       "Incorrect amount of arguments provided to search: " +
@@ -156,9 +156,15 @@ export const searchFile: REPLFunction = (
       let resultArray: string[][] | undefined;
 
       // build search for arguments into one string
-      let searchFor = args.slice(2).reduce(function (pre, next) {
-        return pre + " " + next;
-      });
+      let inputArr: string[] | undefined = args.slice(2);
+      let searchFor;
+      if (inputArr.length > 1) {
+        searchFor = inputArr.reduce(function (pre, next) {
+          return pre + " " + next;
+        });
+      } else {
+        searchFor = inputArr[0];
+      }
 
       // check if column identifier is number
       if (!isNaN(parseInt(args[1]))) {

@@ -131,3 +131,68 @@ test("view errors and some basic cases", () => {
   );
   expect(cmdFunc.viewFile(["view"], true, () => 3).length).toBe(5);
 });
+
+test("search erros and some basic cases with interaction of load and view", () => {
+  // must have a search value
+  expect(cmdFunc.searchFile(["search", "2"], true, () => 3)).toBe(
+    "Incorrect amount of arguments provided to search: " +
+      "2" +
+      " arguments; please use search <column number or name><item to search for>  (2 or more argument)"
+  );
+
+  // search without file loaded in
+  expect(cmdFunc.searchFile(["search", "2", "hi"], true, () => 3)).toBe(
+    "No search results for coloumn identifier: 2 value: hi"
+  );
+
+  // load with success file and view with that file
+  let file = "stars";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " loaded"
+  );
+  expect(cmdFunc.viewFile(["view"], true, () => 3).length).toBe(5);
+  expect(
+    cmdFunc.searchFile(["search", "name", "sun"], true, () => 3).length
+  ).toBe(2);
+  expect(cmdFunc.searchFile(["search", "10", "sun"], true, () => 3)).toBe(
+    "No search results for " +
+      "coloumn identifier: " +
+      "10" +
+      " value: " +
+      "sun"
+  );
+  file = "empty";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " loaded"
+  );
+  expect(cmdFunc.viewFile(["view"], true, () => 3).length).toBe(1);
+  expect(cmdFunc.searchFile(["search", "0", "bread"], true, () => 3)).toBe(
+    "No search results for " +
+      "coloumn identifier: " +
+      "0" +
+      " value: " +
+      "bread"
+  );
+
+  file = "stars";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " loaded"
+  );
+  file = "starsOne";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " loaded"
+  );
+  expect(cmdFunc.viewFile(["view"], true, () => 3).length).toBe(1);
+  expect(cmdFunc.viewFile(["view"], true, () => 3).length).toBe(1);
+  expect(
+    cmdFunc.searchFile(["search", "4", "yellow color"], true, () => 3).length
+  ).toBe(1);
+
+  file = "";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " cannot be found"
+  );
+  expect(cmdFunc.viewFile(["view"], true, () => 3)).toBe(
+    "No file is loaded; please use load_file <file_name> command first"
+  );
+});
