@@ -1,29 +1,9 @@
+import { resourceUsage } from "process";
 import "react";
 import { Dispatch, SetStateAction } from "react";
+import { getMockedFiles, getSearchResult } from "../data/MockedData";
 
 let loadedFile: string | null = null;
-
-let mockedFileMap = new Map<string, string[][]>();
-let searchResultsLabels: Map<string, Map<string, string[][]>> = new Map();
-
-let starsArray = [
-  ["name", "location", "x-coord"],
-  ["sun", "milky way", "192"],
-  ["96 G. Psc", "milky way", "1032.2"],
-  ["sun", "another milky way", "192.3"],
-  ["Rigel Kentaurus A", "Andromeda", "3.20"],
-];
-
-let emptyArray = [[]];
-
-mockedFileMap.set("stars", starsArray);
-mockedFileMap.set("empty", emptyArray);
-
-searchResultsLabels.set("name", new Map());
-searchResultsLabels.get("name")!.set("sun", [
-  ["sun", "milky way", "192"],
-  ["sun", "another milky way", "192.3"],
-]);
 
 /**
  * A interface for all REPLFunctions;
@@ -94,7 +74,7 @@ export const loadFile: REPLFunction = (
       fileArgumets.length +
       " arguments; please provide load_file <file name>";
   } else {
-    let fileKey = mockedFileMap.get(fileArgumets[0]);
+    let fileKey = getMockedFiles().get(fileArgumets[0]);
     if (fileKey) {
       loadedFile = fileArgumets[0];
       result = "File with file name " + loadedFile + " loaded";
@@ -128,7 +108,7 @@ export const viewFile: REPLFunction = (
       " arguments; please use view (1 argument)";
   } else {
     if (loadedFile) {
-      let resultArray = mockedFileMap.get(loadedFile);
+      let resultArray = getMockedFiles().get(loadedFile);
       if (resultArray == undefined) {
         result = "File with file name " + loadFile + " not found in file map";
       } else {
@@ -159,26 +139,38 @@ export const searchFile: REPLFunction = (
   setBriefMode: Dispatch<SetStateAction<boolean>>
 ): string | string[][] => {
   let result: string[][] | string;
-  if (args.length != 3) {
+  if (args.length < 2) {
     console.log(args.length);
     result =
       "Incorrect amount of arguments provided to search: " +
       args.length +
-      " arguments; please use search <column number or name><item to search for>  (1 argument)";
+      " arguments; please use search <column number or name><item to search for>  (2 or more argument)";
   } else {
-    if (loadedFile) {
-      let resultArray: string[][] | undefined;
+    let fileResults: Map<string | number, Map<string, string[][]>> | undefined;
+    // get the file -> all its search results
+    if (loadedFile && (fileResults = getSearchResult().get(loadedFile))) {
+      // map of all searches under that column identifier
       let outerMap: Map<string, string[][]> | undefined;
+      let resultArray: string[][] | undefined;
+
+      // build search for arguments into one string
+      let searchFor = args.slice(2).reduce(function (pre, next) {
+        return pre + " " + next;
+      });
+
+      // check if column identifier is number
       if (!isNaN(parseInt(args[1]))) {
-        let column = mockedFileMap.get(loadedFile)![0][parseInt(args[1])];
-        outerMap = searchResultsLabels.get(column);
+        outerMap = fileResults?.get(parseInt(args[1]));
       } else {
-        outerMap = searchResultsLabels.get(args[1]);
+        outerMap = fileResults?.get(args[1]);
       }
+
       if (outerMap) {
-        resultArray = outerMap.get(args[2]);
+        resultArray = outerMap?.get(searchFor);
       }
-      if (resultArray != undefined) {
+
+      // produce output
+      if (resultArray != undefined && resultArray.length > 0) {
         result = resultArray;
       } else {
         result =
@@ -186,9 +178,7 @@ export const searchFile: REPLFunction = (
           "coloumn identifier: " +
           args[1] +
           " value: " +
-          args[2];
-
-        result = "No search results";
+          searchFor;
       }
     } else {
       result =
