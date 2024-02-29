@@ -66,7 +66,6 @@ export const loadFile: REPLFunction = (
   briefMode: boolean,
   setBriefMode: Dispatch<SetStateAction<boolean>>
 ): string => {
-  // clear out any previous files
   loadedFile = "";
   let result: string;
   let fileArgumets = args.slice(1);
