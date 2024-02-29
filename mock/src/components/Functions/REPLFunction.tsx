@@ -1,14 +1,6 @@
 import "react";
 import { Dispatch, SetStateAction } from "react";
 
-/**
- * Method to take in command, call command related functions,
- *  and produce ouput to put in history.
- *
- * input: the command in an array of string
- * output: the result to print to history when the command finishes execution
- */
-
 let loadedFile: string | null = null;
 
 let mockedFileMap = new Map<string, string[][]>();
@@ -184,7 +176,6 @@ export const searchFile: REPLFunction = (
       if (resultArray != undefined) {
         result = resultArray;
       } else {
-
         result =
           "No search results for " +
           "coloumn identifier: " +
@@ -193,7 +184,6 @@ export const searchFile: REPLFunction = (
           args[2];
 
         result = "No search results";
-
       }
     } else {
       result =

@@ -26,7 +26,7 @@ function App() {
    */
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  // add comamnds and function to map here
+  // add or delete comamnds and function to map here
   addCommand("mode", changeMode);
   addCommand("load_file", loadFile);
   addCommand("view", viewFile);
@@ -35,7 +35,7 @@ function App() {
   return (
     <div className="App">
       <div className="App-header">
-        <h1>Mock</h1>
+        <h1 aria-label="Mock Header">Mock</h1>
         <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       </div>
       {isLoggedIn && <REPL />}
