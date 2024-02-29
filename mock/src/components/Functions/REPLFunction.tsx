@@ -13,7 +13,12 @@ let starsArray = [
   ["sun", "another milky way", "192.3"],
   ["Rigel Kentaurus A", "Andromeda", "3.20"],
 ];
+
+let emptyArray = [[]];
+
 mockedFileMap.set("stars", starsArray);
+mockedFileMap.set("empty", emptyArray);
+
 searchResultsLabels.set("name", new Map());
 searchResultsLabels.get("name")!.set("sun", [
   ["sun", "milky way", "192"],
