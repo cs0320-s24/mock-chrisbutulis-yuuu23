@@ -82,6 +82,14 @@ test("search", async ({ page }) => {
   await expect(table.nth(1)).toContainText("sunanother milky way192.3");
 });
 
-//TODO search without loaded file
+test("search without loading", async ({ page }) => {
+  await page.getByPlaceholder("Enter command here!").fill("search");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(
+    page.getByText(
+      "Incorrect amount of arguments provided to search: 1 arguments; please use search <column number or name><item to search for> (2 or more argument)"
+    )
+  ).toBeVisible();
+});
 
 //Loading in different files
