@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
-import { getCommandMap } from "./Functions/REPLCmdMap";
+import { getCommandMap } from "../Functions/REPLCmdMap";
 
 /**
  * A histEntry interface for sharing command function results to be turned into

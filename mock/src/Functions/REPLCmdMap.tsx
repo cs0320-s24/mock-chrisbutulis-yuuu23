@@ -10,6 +10,11 @@ let cmdMap = new Map<string, REPLFunction>();
  */
 export function addCommand(cmd: string, func: REPLFunction) {
   cmdMap.set(cmd, func);
+  if (cmdMap.has(cmd)) {
+    return "command " + cmd + " successfully added";
+  } else {
+    return "command " + cmd + " not added; try again";
+  }
 }
 
 /**
@@ -19,7 +24,11 @@ export function addCommand(cmd: string, func: REPLFunction) {
  * @param cmd the command to delete
  */
 export function deleteCommand(cmd: string) {
-  cmdMap.delete(cmd);
+  if (cmdMap.delete(cmd)) {
+    return "command " + cmd + " deleted";
+  } else {
+    return "command " + cmd + " not found";
+  }
 }
 
 /**

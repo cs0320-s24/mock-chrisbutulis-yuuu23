@@ -2,13 +2,13 @@ import { useState } from "react";
 import "../styles/App.css";
 import { LoginButton } from "./LoginButton";
 import { REPL } from "./REPL";
-import { addCommand, deleteCommand } from "./Functions/REPLCmdMap";
+import { addCommand, deleteCommand } from "../Functions/REPLCmdMap";
 import {
   changeMode,
   loadFile,
   viewFile,
   searchFile,
-} from "./Functions/REPLFunction";
+} from "../Functions/REPLFunction";
 
 /**
  * This is the highest level of Mock which builds the component APP;

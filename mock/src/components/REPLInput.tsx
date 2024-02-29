@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import "../styles/main.css";
 import { ControlledInput } from "./ControlledInput";
-import { REPLFunction } from "./Functions/REPLFunction";
+import { REPLFunction } from "../Functions/REPLFunction";
 import { histEntry } from "./REPL";
 
 /**
