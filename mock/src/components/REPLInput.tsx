@@ -31,10 +31,7 @@ export function REPLInput(props: REPLInputProps) {
    * To keep state of commandString and function to update this String
    */
   const [commandString, setCommandString] = useState<string>("");
-  /**
-   * To keep state of number of commands enterd and function to update this value
-   */
-  const [count, setCount] = useState<number>(0);
+
   /**
    * To keep state of the current mode (whether it's brief or not) and
    *  function to update this boolean
@@ -49,7 +46,6 @@ export function REPLInput(props: REPLInputProps) {
    * @param commandString the comamnd entered by the user
    */
   function handleSubmit(commandString: string) {
-    setCount(count + 1);
     let output: string | string[][];
     let args = commandString.split(" ");
     let useFunction = props.commandMap.get(args[0]);
@@ -96,12 +92,8 @@ export function REPLInput(props: REPLInputProps) {
           ariaLabel="Command input"
         />
       </fieldset>
-      <button
-        type="submit"
-        aria-lable="Submit cmd btn"
-        onClick={() => handleSubmit(commandString)}
-      >
-        Submitted {count} times
+      <button aria-lable="Submit" onClick={() => handleSubmit(commandString)}>
+        Submit
       </button>
     </div>
   );
