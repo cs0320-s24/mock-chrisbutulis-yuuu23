@@ -64,6 +64,7 @@ test("add/delete to map with getCommandMap and function return str", () => {
   expect(cmdMap.getCommandMap().size).toBe(0);
 });
 
+/* Due to the difficulty to instantiate state object, more testing are done with e2e on the exact functionality*/
 test("changeMode Function with error handling", () => {
   // test too much arguments
   expect(cmdFunc.changeMode(["mode", "Hi", "fhh"], true, () => 3)).toBe(
@@ -73,11 +74,60 @@ test("changeMode Function with error handling", () => {
   );
 });
 
-test("changeMode Function with error handling", () => {
+test("load with error and some basic cases", () => {
   // test too much arguments
-  expect(cmdFunc.changeMode(["mode", "Hi", "fhh"], true, () => 3)).toBe(
-    "Incorrect amount of arguments provided to mode: " +
-      "3" +
-      " arguments; please use mode (1 argument)"
+  expect(cmdFunc.loadFile(["load", "Hi", "fhh"], true, () => 3)).toBe(
+    "Incorrect amount of arguments provided to load_file: 2 arguments; please provide load_file <file name>"
   );
+
+  // test loading not found
+  let file = "";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " cannot be found"
+  );
+
+  // test loading found
+  file = "stars";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " loaded"
+  );
+
+  // test another load found (load file should change)
+  file = "starsOne";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " loaded"
+  );
+
+  // test another load where file not found
+  file = "empty3";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " cannot be found"
+  );
+});
+
+test("view errors and some basic cases", () => {
+  expect(cmdFunc.viewFile(["view", "Hi"], true, () => 3)).toBe(
+    "Incorrect amount of arguments provided to view: 2 arguments; please use view (1 argument)"
+  );
+
+  // view can not be activated without file loaded in
+  expect(cmdFunc.viewFile(["view"], true, () => 3)).toBe(
+    "No file is loaded; please use load_file <file_name> command first"
+  );
+
+  // load with mistake file and cannot activate view
+  let file = "empty3";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " cannot be found"
+  );
+  expect(cmdFunc.viewFile(["view"], true, () => 3)).toBe(
+    "No file is loaded; please use load_file <file_name> command first"
+  );
+
+  // load with success file and view with that file
+  file = "stars";
+  expect(cmdFunc.loadFile(["load", file], true, () => 3)).toBe(
+    "File with file name " + file + " loaded"
+  );
+  expect(cmdFunc.viewFile(["view"], true, () => 3).length).toBe(5);
 });
