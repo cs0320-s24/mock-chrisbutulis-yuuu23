@@ -1,5 +1,6 @@
 {
   "name": "cs32-sprint3-gearup",
+  "type": "module",
   "version": "22.2.0",
   "description": "Brown CSCI0320 Sprint 3 Gearup for Fall 2023",
   "license": "UNLICENSED",
@@ -20,7 +21,6 @@
     "vitest": "^1.2.1",
     "web-vitals": "^2.1.4"
   },
-  "type": "module",
   "scripts": {
     "start": "vite",
     "build": "vite build",
