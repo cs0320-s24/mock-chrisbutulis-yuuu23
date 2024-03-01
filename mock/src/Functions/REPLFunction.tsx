@@ -1,4 +1,3 @@
-import { resourceUsage } from "process";
 import "react";
 import { Dispatch, SetStateAction } from "react";
 import { getMockedFiles, getSearchResult } from "../data/MockedData";
