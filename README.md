@@ -1,10 +1,10 @@
 # Project Details
 
-Project name: Server (Sprint 3)
+**Project name:** Server (Sprint 3)
 
-Team members: cbutulis and mzheng37
+**Team members:** cbutulis and mzheng37
 
-Contributions:
+**Contributions:**
 
 cbutulis: load and view functionality
 
@@ -12,13 +12,13 @@ mzheng37: search functionality and html tables
 
 shared tasks: testing
 
-Total estimated time: 15 hours
+**Total estimated time:** 15 hours
 
-GitHub Link: [click here](https://github.com/cs0320-s24/mock-chrisbutulis-yuuu23.git)
+**GitHub Link:** [click here](https://github.com/cs0320-s24/mock-chrisbutulis-yuuu23.git)
 
 # Design Choices
 
-Design Choices:
+**Design Choices:**
 
 -calling addCommand() in App.tsx, which allows the stakeholder to choose which commands to add,
 and even add their own.
@@ -34,7 +34,7 @@ code.
 -Adding support for the user to press the return key rather than clicking submit for ease
 of use and accessibility.
 
-Explain the relationships between classes/interfaces:
+**Explain the relationships between classes/interfaces:**
 
 -The App function is the top-level function, where a LoginButton and REPL are created.
 REPLCmdMap's addCommand function is referenced here to add command functionality.
@@ -72,13 +72,12 @@ Built in files (use exact file name as filepath):
 
     -empty
 
-Discuss any specific data structures you used, why you created it, and other high level
-explanations:
+**Discuss any specific data structures you used:**
 
 -The primary data structures are an array which stores type histEntry, a custom type which
 stores history data, and any string[] or string[][] this datatype contains.
 
-Runtime/space optimizations you made: N/A
+**Runtime/space optimizations you made:** N/A
 
 # Errors/Bugs
 
@@ -93,4 +92,4 @@ Tests: navigate to the mock directory and run `npx playwright test`
 
 # Collaboration
 
-None.
+No outside collaboration.

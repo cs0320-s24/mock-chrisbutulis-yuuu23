@@ -76,20 +76,53 @@ test("search", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   const table = page.locator(".csv-data-table");
-
   //headers
   await expect(table.nth(1)).toContainText("sunmilky way192");
   await expect(table.nth(1)).toContainText("sunanother milky way192.3");
 });
 
 test("search without loading", async ({ page }) => {
-  await page.getByPlaceholder("Enter command here!").fill("search");
+  await page.getByPlaceholder("Enter command here!").fill("search 0 qwerty");
   await page.getByRole("button", { name: "Submit" }).click();
   await expect(
     page.getByText(
-      "Incorrect amount of arguments provided to search: 1 arguments; please use search <column number or name><item to search for> (2 or more argument)"
+      "No file is loaded; please use load_file <file_name> command first"
     )
   ).toBeVisible();
+});
+
+test("search no results", async ({ page }) => {
+  await page.getByPlaceholder("Enter command here!").fill("load_file stars");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await page.getByPlaceholder("Enter command here!").click();
+  await page.getByPlaceholder("Enter command here!").fill("search 0 qwerty");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(
+    page.getByText("No search results for coloumn identifier: 0 value: qwerty")
+  ).toBeVisible();
+});
+
+test("search empty file", async ({ page }) => {
+  await page.getByPlaceholder("Enter command here!").fill("load_file empty");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await page.getByPlaceholder("Enter command here!").click();
+  await page.getByPlaceholder("Enter command here!").fill("search 0 qwerty");
+  await page.getByRole("button", { name: "Submit" }).click();
+  await expect(
+    page.getByText("No search results for coloumn identifier: 0 value: qwerty")
+  ).toBeVisible();
+});
+
+test("load file then sign out then attempt to view", async ({ page }) => {
+  await page.getByPlaceholder("Enter command here!").fill("load_file stars");
+  await page.getByPlaceholder("Enter command here!").press("Enter");
+  await page.getByLabel("Sign Out").click();
+  await page.getByLabel("Login").click();
+  await page.getByPlaceholder("Enter command here!").click();
+  await page.getByPlaceholder("Enter command here!").fill("view");
+  await page.getByPlaceholder("Enter command here!").press("Enter");
+
+  await expect(page.getByText("name")).toHaveCount(1);
 });
 
 //Loading in different files
