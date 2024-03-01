@@ -88,7 +88,8 @@ None discovered, and no substantial checkstyle errors.
 # How to
 
 Website: navigate to the mock directory and run `npm start`
-Tests: navigate to the mock directory and run `npx playwright test`
+
+Tests: navigate to the mock directory and run `nmp run test`
 
 # Collaboration
 
