@@ -66,15 +66,6 @@ export function REPLInput(props: REPLInputProps) {
     setCommandString("");
   }
 
-  const onKeydown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-    // 'keypress' event misbehaves on mobile so we track 'Enter' key via 'keydown' event
-    if (event.key === "Enter") {
-      event.preventDefault();
-      event.stopPropagation();
-      handleSubmit(commandString);
-    }
-  };
-
   return (
     <div className="repl-input">
       <fieldset
