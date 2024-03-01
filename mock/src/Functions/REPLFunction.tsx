@@ -61,11 +61,7 @@ export const changeMode: REPLFunction = (
  * @param setBriefMode (unused - for interface)
  * @returns depending on success or failure if the file is loaded in successifully
  */
-export const loadFile: REPLFunction = (
-  args: Array<string>,
-  briefMode: boolean,
-  setBriefMode: Dispatch<SetStateAction<boolean>>
-): string => {
+export const loadFile: REPLFunction = (args: Array<string>): string => {
   loadedFile = "";
   let result: string;
   let fileArgumets = args.slice(1);
@@ -97,9 +93,7 @@ export const loadFile: REPLFunction = (
  *  if success return the string 2D array holding CSV data in rows
  */
 export const viewFile: REPLFunction = (
-  args: Array<string>,
-  briefMode: boolean,
-  setBriefMode: Dispatch<SetStateAction<boolean>>
+  args: Array<string>
 ): string | string[][] => {
   let result: string[][] | string;
   if (args.length > 1 || args.length <= 0) {
@@ -135,9 +129,7 @@ export const viewFile: REPLFunction = (
  *  if success return the string 2D array holding the found rows
  */
 export const searchFile: REPLFunction = (
-  args: Array<string>,
-  briefMode: boolean,
-  setBriefMode: Dispatch<SetStateAction<boolean>>
+  args: Array<string>
 ): string | string[][] => {
   let result: string[][] | string;
   if (args.length <= 2) {
