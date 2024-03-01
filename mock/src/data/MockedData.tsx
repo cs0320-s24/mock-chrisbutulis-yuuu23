@@ -13,6 +13,10 @@ let searchResultStarOne: Map<
   string | number,
   Map<string, string[][]>
 > = new Map();
+let searchResultStarOneCol: Map<
+  string | number,
+  Map<string, string[][]>
+> = new Map();
 let searchResultEmpty: Map<
   string | number,
   Map<string, string[][]>
@@ -27,10 +31,12 @@ let starsArray = [
   ["Rigel Kentaurus A", "Andromeda", "3.20"],
 ];
 let starOne = [["sun", "milky way", "192", "bright", "yellow color"]];
+let starCol = [["sun"], ["milky way"], ["192"], ["bright"], ["yellow color"]];
 let emptyArray = [[]];
 
 mockedFileMap.set("stars", starsArray);
 mockedFileMap.set("starsOne", starOne);
+mockedFileMap.set("starsCol", starCol);
 mockedFileMap.set("empty", emptyArray);
 
 /* set up search results: */
@@ -65,6 +71,9 @@ searchResultStarOne
   .get(4)!
   .set("yellow color", [["sun", "milky way", "192", "bright", "yellow color"]]);
 
+searchResultStarOneCol.set(0, new Map());
+searchResultStarOneCol.get(0)!.set("bright", [["bright"]]);
+
 // search result for column name/column index not found
 searchResultEmpty.set(0, new Map());
 searchResultEmpty.get(0)!.set("bread", []);
@@ -78,10 +87,18 @@ searchResultStars.get(10)!.set("sun", []);
 searchResultStars.set("hi", new Map());
 searchResultStars.get("hi")!.set("sun", []);
 
+searchResultStarOneCol.set("wheat", new Map());
+searchResultStarOneCol.get("wheat")!.set("bright", []);
+
 // search result for item not found in existing column name / column index but found elsewhere in file
 searchResultStars.get("name")!.set("another milky way", []);
 searchResultStars.get(1)!.set("sun", []);
 searchResultStars.get(0)!.set("another milky way", []);
+searchResultStarOne.set(0, new Map());
+searchResultStarOne.get(0)!.set("yellow color", []);
+
+// search for something that exist in another file but not the current file
+searchResultStarOne.get(4)!.set("another milky way", []);
 
 /**
  * Getter for map storing all mocked data
@@ -94,6 +111,7 @@ export function getMockedFiles() {
 
 resultToFile.set("stars", searchResultStars);
 resultToFile.set("starsOne", searchResultStarOne);
+resultToFile.set("starsCol", searchResultStarOneCol);
 resultToFile.set("empty", searchResultEmpty);
 /**
  * Getter for map storing mocked search results according to file name
