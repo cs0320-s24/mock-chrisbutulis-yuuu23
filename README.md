@@ -6,11 +6,11 @@
 
 **Contributions:**
 
-cbutulis: load and view functionality
+cbutulis: load and view functionality, readme
 
-mzheng37: search functionality and html tables
+mzheng37: search functionality and html tables, documentation
 
-shared tasks: testing
+shared tasks: testing, organization, creating mocked-data
 
 **Total estimated time:** 15 hours
 
@@ -21,7 +21,7 @@ shared tasks: testing
 **Design Choices:**
 
 -calling addCommand() in App.tsx, which allows the stakeholder to choose which commands to add,
-and even add their own.
+and even add their own, or deleteCommand() which allows deletion of commands.
 
 -Returning a defensive copy of the command map in REPL, so it can't be inappropriately modified
 after the initial preferences are set.
@@ -84,6 +84,36 @@ stores history data, and any string[] or string[][] this datatype contains.
 None discovered, and no substantial checkstyle errors.
 
 # Tests
+
+The test suite is comprised of five main components: general Application testing, Command entry
+testing, Interactions testing, Mode testing (brief/verbose), and Unit testing. The components
+perform the following functionality tests:
+
+-Application testing: Here there are tests to ensure the login button and header appear, that
+input box and history don't appear before logging in, that typing into input changes its contents,
+that clicking submit clears input, and that clicking login makes the submit button appear.
+
+-Command entry testing: Here there are tests to ensure that an appropriate error arises if an
+unknown command is entered, that alternating between existing and non-existing commands produces
+expected output, that empty commands produce an error, that each command (load, view, and search) work
+under normal operation, that searching with no results produces a no results message, and that
+searching an empty file produces a no results message.
+
+-Interactions testing: Here there are tests to ensure that loading and viewing work with
+repeated loads, that loading in files that don't exist and then files that exist along with changing
+mode works, that viewing without loading produces an error message, that searching without
+loading produces an error message, that loading a file, signing out, and then viewing doesn't remove
+the file. Tests are also scattered throughout which test that mode displays appropriate command
+history.
+
+-Mode testing: Here there are tests to ensure that changing mode from brief to verbose
+works, and that mode changing betweeen brief and verbose and back to brief many times works,
+
+-Unit testing: Here there are individual function tests to ensure that adding and deleting
+from the command map work, that changing mode produces the correct output/errors when given
+varying arguments, that loading produces the correct errors with varying arguments, that search
+produces errors when given the incorrect amount of arguments, and a few basic interactions between
+load and view calls.
 
 # How to
 

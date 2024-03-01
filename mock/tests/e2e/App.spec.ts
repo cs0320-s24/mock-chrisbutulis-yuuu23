@@ -48,11 +48,3 @@ test("on page load, i see a button", async ({ page }) => {
   await page.getByLabel("Login").click();
   await expect(page.getByRole("button", { name: "Submit" })).toBeVisible();
 });
-
-test("i cannot see repl history box or do anything before i click login", async ({
-  page,
-}) => {
-  await expect(page.getByLabel("Login")).toBeVisible();
-  await expect(page.getByLabel("Command input")).toBeHidden();
-  await expect(page.getByLabel("Repl history")).toBeHidden();
-});
