@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../styles/App.css";
 import { LoginButton } from "./LoginButton";
 import { REPL } from "./repl/REPL";
+import { Select } from "./repl/Select";
 import { addCommand, deleteCommand } from "../Functions/REPLCmdMap";
 import {
   changeMode,
@@ -38,7 +39,8 @@ function App() {
         <h1 aria-label="Mock Header">Mock</h1>
         <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       </div>
-      {isLoggedIn && <REPL />}
+      {/* {isLoggedIn && <REPL />} */}
+      {isLoggedIn && <Select />}
     </div>
   );
 }
