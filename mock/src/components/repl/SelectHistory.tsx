@@ -42,7 +42,7 @@ export function SelectHistory(props: SelectHistoryProps) {
   }
 
   return (
-    <div className="repl-history" aria-label="Repl history">
+    <div className="select-history" aria-label="select history">
       {props.history.map((entry, index) => (
         <div key={index}>
           {typeof entry.data === "string" ? (

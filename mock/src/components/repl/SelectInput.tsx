@@ -51,8 +51,8 @@ export function SelectInput(props: SelectInputProps) {
   }
 
   return (
-    <div>
-      <select name="dropdown" id="dropdown">
+    <div className="dropdown-container">
+      <select className="dropdown" name="dropdown" id="dropdown">
         {Array.from(getMockedFiles().keys()).map((item, key) => (
           <option key={key}>{item}</option>
         ))}
