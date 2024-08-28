@@ -1,15 +1,7 @@
 import { useState } from "react";
 import "../styles/App.css";
 import { LoginButton } from "./LoginButton";
-import { REPL } from "./repl/REPL";
-import { Select } from "./repl/Select";
-import { addCommand, deleteCommand } from "../Functions/REPLCmdMap";
-import {
-  changeMode,
-  loadFile,
-  viewFile,
-  searchFile,
-} from "../Functions/REPLFunction";
+import { Select } from "./select/Select";
 
 /**
  * This is the highest level of Mock which builds the component APP;
@@ -27,19 +19,12 @@ function App() {
    */
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  // add or delete comamnds and function to map here
-  addCommand("mode", changeMode);
-  addCommand("load_file", loadFile);
-  addCommand("view", viewFile);
-  addCommand("search", searchFile);
-
   return (
     <div className="App">
       <div className="App-header">
         <h1 aria-label="Mock Header">Mock</h1>
         <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       </div>
-      {/* {isLoggedIn && <REPL />} */}
       {isLoggedIn && <Select />}
     </div>
   );
