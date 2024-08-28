@@ -1,24 +1,25 @@
-/* CSS for Main REPL interface */
-.repl {
+/* CSS for Main Select interface */
+
+.select {
   position: relative;
   min-height: 95vh;
 }
 
-.repl-history {
+.select-history {
   height: 55vh;
   margin: auto;
   display: block;
   overflow: scroll;
 }
 
-.repl-input {
-  margin: auto;
-  height: 10vh;
+.dropdown {
+  width: 10vw;
+  margin: 10px;
+  cursor: pointer;
 }
-.repl-command-box {
-  width: 90%;
-  margin: auto;
-  display: block;
+
+.dropdown > option {
+  text-align: center;
 }
 
 button {
@@ -40,4 +41,27 @@ table {
 .csv-data-table td {
   border: solid 1px;
   padding: 0.3rem 0.5rem;
+}
+
+.repl {
+  position: relative;
+  min-height: 95vh;
+}
+
+.repl-history {
+  height: 55vh;
+  margin: auto;
+  display: block;
+  overflow: scroll;
+}
+
+.repl-input {
+  margin: auto;
+  height: 10vh;
+}
+
+.repl-command-box {
+  width: 90%;
+  margin: auto;
+  display: block;
 }
