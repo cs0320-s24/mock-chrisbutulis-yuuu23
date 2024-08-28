@@ -25,6 +25,7 @@
 button {
   margin: auto;
   display: block;
+  margin-bottom: 10px;
 }
 
 /* For data tables whenever table display is required*/
@@ -43,25 +44,9 @@ table {
   padding: 0.3rem 0.5rem;
 }
 
-.repl {
-  position: relative;
-  min-height: 95vh;
-}
-
-.repl-history {
-  height: 55vh;
+/* For Bar Chart */
+.chart-container {
   margin: auto;
-  display: block;
-  overflow: scroll;
-}
-
-.repl-input {
-  margin: auto;
-  height: 10vh;
-}
-
-.repl-command-box {
-  width: 90%;
-  margin: auto;
-  display: block;
+  height: 45vh;
+  width: 45vw;
 }

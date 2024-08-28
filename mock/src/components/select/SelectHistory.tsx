@@ -1,5 +1,7 @@
 import "../../styles/main.css";
 import { histEntry } from "./Select";
+import { Bar } from "react-chartjs-2";
+import "chart.js/auto";
 
 /**
  * A interface for the props that are passed into SelectHistory.
@@ -41,12 +43,48 @@ export function SelectHistory(props: SelectHistoryProps) {
     return result;
   }
 
+  /**
+   * renders standard bar chart with the data provided
+   *
+   * TODO: switch out the data and labels
+   *
+   */
+  function configureChartData(input: string[][]) {
+    const data = {
+      labels: ["Italy", "France", "Spain", "USA", "Argentina"],
+      datasets: [
+        {
+          backgroundColor: ["red", "green", "blue", "orange", "brown"],
+          data: [55, 49, 44, 24, 15],
+        },
+      ],
+    };
+    return data;
+  }
+
   return (
     <div className="select-history" aria-label="select history">
       {props.history.map((entry, index) => (
         <div key={index}>
           {typeof entry.data === "string" ? (
             <p>{entry.data}</p>
+          ) : entry.useChartView ? (
+            <div className="chart-container">
+              <Bar
+                data={configureChartData(entry.data)}
+                options={{
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: "Users Gained between 2016-2020",
+                    },
+                    legend: {
+                      display: false,
+                    },
+                  },
+                }}
+              />
+            </div>
           ) : (
             <table className="csv-data-table" aria-label="CSV Tables">
               {configureTableData(entry.data)}

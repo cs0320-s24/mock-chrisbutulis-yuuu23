@@ -9,9 +9,11 @@ import { SelectInput } from "./SelectInput";
  *
  * @params
  * data: the result of running the command; can be string or 2D array holding string
+ * isTableView: if the data should be displayed in table view
  */
 export interface histEntry {
   data: string | string[][];
+  useChartView: boolean;
 }
 
 /**

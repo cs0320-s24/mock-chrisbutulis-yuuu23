@@ -21,6 +21,7 @@ let searchResultEmpty: Map<
   string | number,
   Map<string, string[][]>
 > = new Map();
+let numberOfHouse: Map<string | number, Map<string, string[][]>> = new Map();
 
 /* set up files, add to file map, and add in result maps:  */
 let starsArray = [
@@ -33,11 +34,19 @@ let starsArray = [
 let starOne = [["sun", "milky way", "192", "bright", "yellow color"]];
 let starCol = [["sun"], ["milky way"], ["192"], ["bright"], ["yellow color"]];
 let emptyArray = [[]];
+let numberOfHouseArray = [
+  ["direction", "houses"],
+  ["east", "4"],
+  ["west", "4"],
+  ["north", "3"],
+  ["south", "1"],
+];
 
 mockedFileMap.set("stars", starsArray);
 mockedFileMap.set("starsOne", starOne);
 mockedFileMap.set("starsCol", starCol);
 mockedFileMap.set("empty", emptyArray);
+mockedFileMap.set("numberOfHouse", numberOfHouseArray);
 
 /* set up search results: */
 // search result with column header found
