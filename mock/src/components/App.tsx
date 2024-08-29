@@ -12,7 +12,13 @@ import { Select } from "./select/Select";
  *  Note: if the user is loggedIn, the REPL screen will show,
  *  else it will stay at the screen prompting for log in
  */
-function App() {
+function App({
+  children,
+  modal,
+}: {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}) {
   /**
    * A state tracker for if the user is logged in and
    *  a function to update the logged-in state
@@ -29,5 +35,23 @@ function App() {
     </div>
   );
 }
+
+// function App() {
+//   /**
+//    * A state tracker for if the user is logged in and
+//    *  a function to update the logged-in state
+//    */
+//   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+//   return (
+//     <div className="App">
+//       <div className="App-header">
+//         <h1 aria-label="Mock Header">Mock</h1>
+//         <LoginButton isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+//       </div>
+//       {isLoggedIn && <Select />}
+//     </div>
+//   );
+// }
 
 export default App;

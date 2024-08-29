@@ -2,6 +2,7 @@ import "../../styles/main.css";
 import { histEntry } from "./Select";
 import { Bar } from "react-chartjs-2";
 import "chart.js/auto";
+import { elements } from "chart.js/auto";
 
 /**
  * A interface for the props that are passed into SelectHistory.
@@ -46,20 +47,33 @@ export function SelectHistory(props: SelectHistoryProps) {
   /**
    * renders standard bar chart with the data provided
    *
-   * TODO: switch out the data and labels
-   *
    */
   function configureChartData(input: string[][]) {
+    const labelArray = input[0];
+    const bars = input[1];
     const data = {
-      labels: ["Italy", "France", "Spain", "USA", "Argentina"],
+      labels: labelArray,
       datasets: [
         {
           backgroundColor: ["red", "green", "blue", "orange", "brown"],
-          data: [55, 49, 44, 24, 15],
+          data: bars.map((element) => parseInt(element)),
         },
       ],
     };
     return data;
+  }
+
+  function checkChart(input: string[][]) {
+    const bars = input[1];
+    if (input.length > 2) {
+      return false;
+    }
+    for (let i = 0; i < bars.length; i++) {
+      if (isNaN(parseInt(bars[i]))) {
+        return false;
+      }
+    }
+    return true;
   }
 
   return (
@@ -68,16 +82,12 @@ export function SelectHistory(props: SelectHistoryProps) {
         <div key={index}>
           {typeof entry.data === "string" ? (
             <p>{entry.data}</p>
-          ) : entry.useChartView ? (
+          ) : entry.useChartView && checkChart(entry.data) ? (
             <div className="chart-container">
               <Bar
                 data={configureChartData(entry.data)}
                 options={{
                   plugins: {
-                    title: {
-                      display: true,
-                      text: "Users Gained between 2016-2020",
-                    },
                     legend: {
                       display: false,
                     },
@@ -85,6 +95,8 @@ export function SelectHistory(props: SelectHistoryProps) {
                 }}
               />
             </div>
+          ) : entry.useChartView && !checkChart(entry.data) ? (
+            <p>Not able to be turned into a chart</p>
           ) : (
             <table className="csv-data-table" aria-label="CSV Tables">
               {configureTableData(entry.data)}
